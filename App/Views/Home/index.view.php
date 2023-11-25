@@ -1,31 +1,35 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col mt-5">
-            <div class="text-center">
-                <h2>Vaííčko MVC FW</h2>
-                <img src="public/images/vaiicko_logo.png">
-                <p>
-                    Gratulujeme vám, úspešne sa vám podarilo nainštalovať a spustiť framework
-                    <strong>Vaííčko</strong> <?= \App\Config\Configuration::FW_VERSION ?>!<br>
-                    Dúfame, že sa Vám pomocou tohto frameworku vytvoríte nejakú skvelú aplikáciu.<br>
-                </p>
-                <p>
-                    Tento jednoduchý framework bol vytvorený pre lepšie pochopenie architektúry MVC.<br>
-                    Je určený pre študentov predmetu <em>vývoj aplikácií pre internet a intranet</em>, ale nielen im.
-                </p>
+<div class="container2">
+    <div class="box">
+        <a href="movies.html">
+            <img src="/public/images/mov.jpg" alt="Image 1">
+            <div class="box-overlay">
+                <p>Movies</p>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="row mt-3">
-        <div class="col text-center">
-            <h4>Autori</h4>
-            <div>
-                <a href="mailto:Patrik.Hrkut@fri.uniza.sk">doc. Ing. Patrik Hrkút, PhD.</a><br>
-                <a href="mailto:Michal.Duracik@fri.uniza.sk">Ing. Michal Ďuračík, PhD.</a><br>
-                <a href="mailto:Matej.Mesko@fri.uniza.sk">Ing. Matej Meško, PhD.</a><br><br>
-                &copy; 2020-<?= date('Y') ?> Žilinská univerzita v Žiline, Fakulta riadenia a informatiky, Katedra
-                softvérových technológií
+    <div class="box">
+        <a href="games.html">
+            <img src="/public/images/gam.png" alt="Image 2">
+            <div class="box-overlay">
+                <p>Games</p>
             </div>
-        </div>
+        </a>
+    </div>
+    <div class="box">
+        <a href="music.html">
+            <img src="/public/images/mus.jpg" alt="Image 3">
+            <div class="box-overlay">
+                <p>Music</p>
+            </div>
+        </a>
     </div>
 </div>
+<footer class="footer">
+    <div class="container">
+        <div class="contact-info">
+            <h3>Contact Us</h3>
+            <p>Email: contact@example.com</p>
+            <p>Phone: +421 420 419 469</p>
+        </div>
+    </div>
+</footer>
