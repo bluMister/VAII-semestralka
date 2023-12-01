@@ -19,9 +19,9 @@
         <ul class="nav-links">
             <li><a href=<?= $link->url("home.index") ?>>Home</a></li>
             <li><a href=<?= $link->url("home.movies") ?>>Movies</a></li>
-            <li><a href=<?= $link->url("home.index") ?>>Games</a></li>
-            <li><a href=<?= $link->url("home.index") ?>>Music</a></li>
-            <li><a href=<?= $link->url("auth.login") ?>>Contact</a></li>
+            <li><a href=<?= $link->url("home.games") ?>>Games</a></li>
+            <li><a href=<?= $link->url("home.music") ?>>Music</a></li>
+            <li style = "margin-left: 250%"><a href=<?= $link->url("auth.login") ?>>Login</a></li>
         </ul>
     </div>
 </nav>
