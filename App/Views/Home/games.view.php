@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
 
-    <title>Title</title>
-</head>
 <div class="container3">
-    <div class="news-cards">
+    <div class="card">
+        <?php
+
+        /** @var Prispevky[] $data */
+
+        use App\Models\Prispevky;
+
+        ?>
+        <div class="row mb-3 p-3">
+            <?php
+            foreach ($data as $prispevky) {
+                ?>
+                <h3 class="mb-0"><?= $prispevky->getNazov() ?></h3>
+                <?php
+            }
+            ?>
+        </div>
         <div class="card">
             <img src="/public/images/thumbnail2.png" alt="News 1">
             <h2>News Title 1</h2>
@@ -42,15 +50,3 @@
         <!-- Add more cards as needed -->
     </div>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <div class="contact-info">
-            <h3>Contact Us</h3>
-            <p>Email: contact@example.com</p>
-            <p>Phone: +421 420 419 469</p>
-        </div>
-    </div>
-</footer>
-</body>
-</html>
