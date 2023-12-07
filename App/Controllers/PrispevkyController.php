@@ -45,8 +45,8 @@ class PrispevkyController extends AControllerBase
         $title = $this->request()->getValue("title");
         $obrazok = $this->request()->getValue("image");
         $category = $this->request()->getValue("kat");
-        $food->setNazov($text);
-        $food->setText($title);
+        $food->setNazov($title);
+        $food->setText($text);
         $food->setObrazok($obrazok);
         $food->setKategoria($category);
         if ($text && $title) {
@@ -68,7 +68,7 @@ class PrispevkyController extends AControllerBase
     public function edit() {
         $id = $this->request()->getValue("id");
         $foodToEdit = Prispevky::getOne($id);
-        return $this->html($foodToEdit, viewName: "add.form");
+        return $this->html($foodToEdit, viewName: "postMaker");
     }
 
     public function delete() {
