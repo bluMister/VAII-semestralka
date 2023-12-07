@@ -40,17 +40,6 @@ class HomeController extends AControllerBase
         return $this->html();
     }
 
-    public function movies(): Response
-    {
-        return $this->html();
-    }
-    public function games(): Response
-    {
-        return $this->html();
-    }
-    public function music(): Response
-    {
-        return $this->html();
-    }
+
 }
 // <?= $link->url("home.contact") ?>

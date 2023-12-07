@@ -1,22 +1,20 @@
+<?php
 
+use \App\Models\Prispevky;
+/** @var Prispevky[] $data */
+/** @var App\Core\IAuthenticator $auth */
+
+?>
 <div class="container3">
-    <div class="card">
-        <?php
-
-        /** @var Prispevky[] $data */
-
-        use App\Models\Prispevky;
-
-        ?>
-        <div class="row mb-3 p-3">
-            <?php
-            foreach ($data as $prispevky) {
-                ?>
-                <h3 class="mb-0"><?= $prispevky->getNazov() ?></h3>
-                <?php
-            }
-            ?>
-        </div>
+    <div class="news-cards">
+        <?php foreach (Prispevky::getAll() as $prispevok): ?>
+            <div class="card">
+                <img src="<?= '/' . $prispevok->getObrazok() ?>" alt="...">
+                <h2><?= $prispevok->getNazov() ?></h2>
+                <p><?= $prispevok->getText() ?></p>
+                <a href="#" class="read-more">Read More</a>
+            </div>
+        <?php endforeach; ?>
         <div class="card">
             <img src="/public/images/thumbnail2.png" alt="News 1">
             <h2>News Title 1</h2>

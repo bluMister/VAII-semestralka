@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Models;
-
-use App\Core\Model;
-class Prispevky extends Model
+class Prispevky extends \App\Core\Model
 {
 
     protected ?int $id = null;
     protected ?string $nazov;
     protected ?string $text;
-    protected ?string $picture;
+    protected ?string $obrazok;
+    protected ?int $kategoria;
 
     public function getId(): ?int
     {
@@ -41,13 +40,23 @@ class Prispevky extends Model
         $this->text = $text;
     }
 
-    public function getPicture(): ?string
+    public function getObrazok(): ?string
     {
-        return $this->picture;
+        return $this->obrazok;
     }
 
-    public function setPicture(string $picture): void
+    public function setObrazok(string $picture): void
     {
-        $this->picture = $picture;
+        $this->obrazok = $picture;
+    }
+
+    public function getKategoria(): ?int
+    {
+        return $this->kategoria;
+    }
+
+    public function setKategoria(?int $kategoria): void
+    {
+        $this->kategoria = $kategoria;
     }
 }

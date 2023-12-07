@@ -10,7 +10,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/style.css">
-    <title>Title</title>
+    <script src="public/js/script.js"></script>
+    <title>Pop some help!</title>
 </head>
 <body>
 <nav class="navbar">
@@ -18,10 +19,17 @@
         <div class="logo">Logo</div>
         <ul class="nav-links">
             <li><a href=<?= $link->url("home.index") ?>>Home</a></li>
-            <li><a href=<?= $link->url("home.movies") ?>>Movies</a></li>
-            <li><a href=<?= $link->url("home.games") ?>>Games</a></li>
-            <li><a href=<?= $link->url("home.music") ?>>Music</a></li>
-            <li style = "margin-left: 250%"><a href=<?= $link->url("auth.login") ?>>Login</a></li>
+            <li><a href=<?= $link->url("prispevky.movies") ?>>Movies</a></li>
+            <li><a href=<?= $link->url("prispevky.games") ?>>Games</a></li>
+            <li><a href=<?= $link->url("prispevky.music") ?>>Music</a></li>
+            <?php if ($auth->isLogged()) { ?>
+            <li><a href=<?= $link->url("prispevky.postMaker") ?>>new</a></li>
+            <?php } ?>
+            <li style = "margin-left: 200%"><?php if ($auth->isLogged()) { ?>
+                    <a href="?c=auth&a=logout" class="active">Logout</a>
+                <?php } else { ?>
+                    <a href="?c=auth&a=login" class="active">Login</a>
+                <?php } ?></li>
         </ul>
     </div>
 </nav>
