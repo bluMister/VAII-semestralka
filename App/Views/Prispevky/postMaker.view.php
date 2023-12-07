@@ -18,10 +18,10 @@
         <input type="checkbox" id="option1" name="kat" value="1" onchange="uncheckOthers('option1')" <?php if (@$data?->getKategoria() == 1){ ?>checked="checked" <?php } ?>)>
         <label for="option1">Option 1</label>
 
-        <input type="checkbox" id="option2" name="kat" value="2" onchange="uncheckOthers('option2')" <?php if (@$data?->getKategoria() == 2){ ?>checked="checked"<?php } ?>)>
+        <input type="checkbox" id="option2" name="kat" value="2" onchange="uncheckOthers('option2')" <?php if (@$data?->getKategoria() == 2){ ?>checked="checked" <?php } ?>)>
         <label for="option2">Option 2</label>
 
-        <input type="checkbox" id="option3" name="kat" value="3" onchange="uncheckOthers('option3')" <?php if (@$data?->getKategoria() == 3){ ?>checked="checked"<?php } ?>)>
+        <input type="checkbox" id="option3" name="kat" value="3" onchange="uncheckOthers('option3')" <?php if (@$data?->getKategoria() == 3){ ?>checked="checked" <?php } ?>)>
         <label for="option3">Option 3</label>
     </div>
 
