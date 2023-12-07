@@ -21,8 +21,8 @@ class PrispevkyController extends AControllerBase
      */
     public function index(): Response
     {
-        $foods = Prispevky::getAll();
-        return $this->html($foods);
+        $posts = Prispevky::getAll();
+        return $this->html($posts);
     }
 
     /**
@@ -32,28 +32,28 @@ class PrispevkyController extends AControllerBase
         $id = $this->request()->getValue("id");
         $data = [];
         if ($id) {
-            $food = Prispevky::getOne($id);
-            if (!$food) {
+            $post = Prispevky::getOne($id);
+            if (!$post) {
                 return $this->redirect("?c=Homes");
             }
             $data["action"] = "Upraviť";
         } else {
-            $food = new Prispevky();
+            $post = new Prispevky();
             $data["action"] = "Pridať";
         }
         $text = $this->request()->getValue("text");
         $title = $this->request()->getValue("title");
         $obrazok = $this->request()->getValue("image");
         $category = $this->request()->getValue("kat");
-        $food->setNazov($title);
-        $food->setText($text);
-        $food->setObrazok($obrazok);
-        $food->setKategoria($category);
+        $post->setNazov($title);
+        $post->setText($text);
+        $post->setObrazok($obrazok);
+        $post->setKategoria($category);
         if ($text && $title) {
-            $food->save();
+            $post->save();
             return $this->redirect("?c=Home");
         } else {
-            $data["food"] = $food;
+            $data["prispevky"] = $post;
             if (!$text) {
                 $data["errors"]["text"] = "text musí byť vyplnený";
             }
@@ -67,8 +67,8 @@ class PrispevkyController extends AControllerBase
 
     public function edit() {
         $id = $this->request()->getValue("id");
-        $foodToEdit = Prispevky::getOne($id);
-        return $this->html($foodToEdit, viewName: "postMaker");
+        $postToEdit = Prispevky::getOne($id);
+        return $this->html($postToEdit, viewName: "postMaker");
     }
 
     public function delete() {

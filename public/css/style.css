@@ -41,6 +41,43 @@ body {
     color: darkolivegreen;
 }
 
+.nav-links li.right-align {
+    margin-left: 200%;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: #4CAF50;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 0;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+    .nav-links li.right-align {
+        margin-left: 0;
+    }
+}
+
 .container2 {
     display: flex;
     flex-wrap: wrap;
@@ -292,3 +329,4 @@ button {
 button:hover {
     background-color: #45a049;
 }
+

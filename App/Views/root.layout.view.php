@@ -25,12 +25,13 @@
             <?php if ($auth->isLogged()) { ?>
             <li><a href=<?= $link->url("prispevky.postMaker") ?>>new</a></li>
             <?php } ?>
-            <li style = "margin-left: 200%"><?php if ($auth->isLogged()) { ?>
+            <li class="right-align"><?php if ($auth->isLogged()) { ?>
                     <a href="?c=auth&a=logout" class="active">Logout</a>
                 <?php } else { ?>
                     <a href="?c=auth&a=login" class="active">Login</a>
                 <?php } ?></li>
         </ul>
+        <div class="mobile-menu-toggle">&#9776;</div
     </div>
 </nav>
 <div class="container-fluid mt-3">
