@@ -18,7 +18,7 @@ function validateForm() {
     });
 
     if (checkedCount !== 1) {
-        alert('Please select exactly one option.');
+        alert('Please select exactly one category.');
         return false;
     }
 

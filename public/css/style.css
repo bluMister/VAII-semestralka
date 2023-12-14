@@ -64,6 +64,7 @@ body {
 
     .nav-links.show {
         display: flex;
+        z-index: 99;
     }
 
     .nav-links li {
@@ -136,6 +137,10 @@ body {
     color: white;
     padding: 20px 0;
     text-align: center;
+    clear: both;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 .contact-info {
