@@ -5,7 +5,7 @@ namespace App\Auth;
 use App\Core\IAuthenticator;
 use App\Models\User;
 
-class Authenticator
+class Authenticator implements IAuthenticator
 {
 
     public function login($login, $password): bool
@@ -43,4 +43,8 @@ class Authenticator
         return isset($_SESSION['user']) && $_SESSION['user'] != null;
     }
 
+    public function getLoggedUserId(): mixed
+    {
+        return $_SESSION['user'];
+    }
 }
