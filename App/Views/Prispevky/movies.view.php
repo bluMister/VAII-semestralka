@@ -7,7 +7,7 @@ use \App\Models\Prispevky;
 ?>
 <div class="container3">
     <div class="news-cards">
-        <?php foreach (Prispevky::getAll() as $prispevok): ?>
+        <?php foreach ($data as $prispevok): ?>
         <div class="card">
             <img src="<?= '/' . $prispevok->getObrazok() ?>" alt="...">
             <h2><?= $prispevok->getNazov() ?></h2>

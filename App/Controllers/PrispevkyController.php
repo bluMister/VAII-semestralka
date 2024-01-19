@@ -10,6 +10,7 @@ use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Helpers\FileStorage;
 
+use App\Models\Comment;
 use http\Exception;
 use PDO;
 use App\Models\Prispevky;
@@ -71,6 +72,13 @@ class PrispevkyController extends AControllerBase
         return $this->html($postToEdit, viewName: "postMaker");
     }
 
+    public function display() {
+        $id = $this->request()->getValue("id");
+        $post = Prispevky::getOne($id);
+        $comments = Comment::getAll();
+        return $this->html(["post" => $post, "comments" => $comments], viewName: "prispevok");
+    }
+
     public function delete() {
         $id = $this->request()->getValue("id");
         $foodToDelete = Prispevky::getOne($id);
@@ -82,15 +90,18 @@ class PrispevkyController extends AControllerBase
 
     public function movies(): Response
     {
-        return $this->html();
+        $posts = Prispevky::getAll();
+        return $this->html($posts);
     }
     public function games(): Response
     {
-        return $this->html();
+        $posts = Prispevky::getAll();
+        return $this->html($posts);
     }
     public function music(): Response
     {
-        return $this->html();
+        $posts = Prispevky::getAll();
+        return $this->html($posts);
     }
     public function postMaker(): Response
     {

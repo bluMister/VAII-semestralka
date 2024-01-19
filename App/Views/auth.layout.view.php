@@ -44,7 +44,7 @@
     <div class="container">
         <div class="contact-info">
             <h3>Contact Us</h3>
-            <p>Email: contact@example.com</p>
+            <p>Email: email@example.com</p>
             <p>Phone: +421 420 419 469</p>
         </div>
     </div>
