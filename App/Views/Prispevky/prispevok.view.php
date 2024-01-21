@@ -11,5 +11,14 @@
     </div>
     <img class="review-image" src="<?= @$data["post"]?->getObrazok() ?>" alt="">
 </div>
+<div class="comments-container">
+    <h2>Comments</h2>
+    <?php foreach ($data["comments"] as $comment): ?>
+        <div class="comment-one">
+            <h3><?= @$comment?->getAuthor() ?></h3>
+            <p><?= @$comment?->getText() ?></p>
+        </div>
+    <?php endforeach; ?>
+</div>
 
 

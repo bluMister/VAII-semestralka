@@ -40,14 +40,5 @@
     </div>
 </div>
 </body>
-<footer class="footer">
-    <div class="container">
-        <div class="contact-info">
-            <h3>Contact Us</h3>
-            <p>Email: email@example.com</p>
-            <p>Phone: +421 420 419 469</p>
-        </div>
-    </div>
-</footer>
 </html>
 

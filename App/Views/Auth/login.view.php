@@ -24,9 +24,10 @@ $layout = 'auth';
                             <input name="password" type="password" id="password" class="form-control"
                                    placeholder="Password" required>
                         </div>
-                        <div style="margin-bottom: 18vw" class="text-center">
-                            <button class="btn btn-primary" type="submit" name="submit">Prihlásiť
+                        <div class="text-center">
+                            <button class="btn btn-primary" type="submit" name="submit">Log In
                             </button>
+                            <p id="switch-form">Don't have an account? Register here</p>
                         </div>
                     </form>
                 </div>

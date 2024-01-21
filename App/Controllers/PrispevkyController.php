@@ -75,7 +75,7 @@ class PrispevkyController extends AControllerBase
     public function display() {
         $id = $this->request()->getValue("id");
         $post = Prispevky::getOne($id);
-        $comments = Comment::getAll();
+        $comments = Comment::getAll("post_id = $id");
         return $this->html(["post" => $post, "comments" => $comments], viewName: "prispevok");
     }
 

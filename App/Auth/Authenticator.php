@@ -10,13 +10,21 @@ class Authenticator implements IAuthenticator
 
     public function login($login, $password): bool
     {
-        $users = User::getAll();
-        foreach ($users as $user) {
-            if ($user->getName() == $login && $user->getPassword() == $password) {
-                $_SESSION['user'] = $login;
-                return true;
-            }
+        try {
+            $user = User::getAll("login = ?", [$login]);
+        } catch (\Exception $e) {
+            return false;
         }
+
+        if (sizeof($user) != 1) {
+            return false;
+        }
+
+        if (password_verify(password_hash($password, PASSWORD_DEFAULT), $user[0]->getPassword())) {
+            $_SESSION["user"] = $login;
+            return true;
+        }
+
         return false;
     }
 

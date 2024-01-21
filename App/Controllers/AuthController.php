@@ -6,6 +6,7 @@ use App\Config\Configuration;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Core\Responses\ViewResponse;
+use App\Models\User;
 
 /**
  * Class AuthController
@@ -34,12 +35,35 @@ class AuthController extends AControllerBase
         if (isset($formData['submit'])) {
             $logged = $this->app->getAuth()->login($formData['login'], $formData['password']);
             if ($logged) {
-                return $this->redirect($this->url("admin.index"));
+                return $this->redirect($this->url("home.index"));
             }
         }
 
         $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
         return $this->html($data);
+    }
+
+    public function register(): Response
+    {
+        $formData = $this->app->getRequest()->getPost();
+
+
+        if (isset($formData['submit'])) {
+            $meno = $formData["login"];
+            $heslo = $formData["password"];
+            $rheslo = $formData["rpassword"];
+            if($heslo == $rheslo){
+                $user = new User();
+                $user->setName($meno);
+                $user->setPassword(password_hash($heslo, PASSWORD_DEFAULT));
+                $user->setAdmin(false);
+                $user->save();
+            }else{
+                $data["errors"] = "passwords must match!";
+                return $this->html($data);
+            }
+        }
+        return $this->redirect($this->url("auth.login"));
     }
 
     /**

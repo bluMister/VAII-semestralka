@@ -1,5 +1,6 @@
 <?php
 
+$layout = 'auth';
 /** @var \App\Core\IAuthenticator $auth */ ?>
 
 <div class="container-fluid">
