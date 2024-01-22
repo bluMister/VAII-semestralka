@@ -51,12 +51,12 @@ class AuthController extends AControllerBase
         if (isset($formData['submit'])) {
             $meno = $formData["login"];
             $heslo = $formData["password"];
-            $rheslo = $formData["rpassword"];
+            $rheslo = $formData["repassword"];
             if($heslo == $rheslo){
                 $user = new User();
-                $user->setName($meno);
-                $user->setPassword(password_hash($heslo, PASSWORD_DEFAULT));
-                $user->setAdmin(false);
+                $user->setMeno($meno);
+                $user->setHeslo(password_hash("$heslo", PASSWORD_DEFAULT));
+                $user->setAdmin(0);
                 $user->save();
             }else{
                 $data["errors"] = "passwords must match!";

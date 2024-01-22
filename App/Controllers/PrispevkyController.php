@@ -11,12 +11,17 @@ use App\Core\Responses\Response;
 use App\Helpers\FileStorage;
 
 use App\Models\Comment;
+use App\Models\Reply;
 use http\Exception;
 use PDO;
 use App\Models\Prispevky;
+use App\Core\IAuthenticator;
+
 
 class PrispevkyController extends AControllerBase
 {
+
+
     /**
      * @inheritDoc
      */
@@ -81,26 +86,57 @@ class PrispevkyController extends AControllerBase
 
     public function delete() {
         $id = $this->request()->getValue("id");
-        $foodToDelete = Prispevky::getOne($id);
-        if ($foodToDelete) {
-            $foodToDelete->delete();
+        $postToDelete = Prispevky::getOne($id);
+        $cat = $postToDelete->getKategoria();
+        if ($postToDelete) {
+            $postToDelete->delete();
         }
-        return $this->redirect("?c=Home");
+        $posts = Prispevky::getAll("kategoria = $cat");
+        return $this->html($posts, "movies");
+    }
+
+    public function addComment() : Response {
+        $postID = $this->request()->getValue("id");
+        $formData = $this->app->getRequest()->getPost();
+        $text = $formData["comment"];
+
+        $comment = new Comment();
+        $comment->setAuthor($this->app->getAuth()->getLoggedUserName());
+        $comment->setText($text);
+        $comment->setPostId($postID);
+        $comment->save();
+
+        $comments = Comment::getAll("post_id = $postID");
+        return $this->json($comments);
+    }
+
+    public function addReply() {
+        $comID = $this->request()->getValue("id");
+        $formData = $this->app->getRequest()->getPost();
+        $text = $formData["comment"];
+
+        $reply = new Reply();
+        $reply->setAuthor($this->app->getAuth()->getLoggedUserName());
+        $reply->setText($text);
+        $reply->setCommentId($comID);
+        $reply->save();
+
     }
 
     public function movies(): Response
     {
-        $posts = Prispevky::getAll();
+        $posts = Prispevky::getAll("kategoria = 1");
+
         return $this->html($posts);
     }
     public function games(): Response
     {
-        $posts = Prispevky::getAll();
+        $posts = Prispevky::getAll("kategoria = 2");
         return $this->html($posts);
     }
     public function music(): Response
     {
-        $posts = Prispevky::getAll();
+        $posts = Prispevky::getAll("kategoria = 3");
         return $this->html($posts);
     }
     public function postMaker(): Response

@@ -7,17 +7,16 @@ use App\Core\Model;
 class User extends Model
 {
     protected ?int $id = null;
+    protected ?string $meno;
+    protected ?string $heslo;
+    protected ?int $admin;
 
-    protected ?string $name;
-    protected ?string $password;
-    protected ?bool $admin;
-
-    public function getAdmin(): ?bool
+    public function getAdmin(): ?int
     {
         return $this->admin;
     }
 
-    public function setAdmin(?bool $admin): void
+    public function setAdmin(?int $admin): void
     {
         $this->admin = $admin;
     }
@@ -27,23 +26,23 @@ class User extends Model
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getMeno(): ?string
     {
-        return $this->name;
+        return $this->meno;
     }
 
-    public function setName(?string $name): void
+    public function setMeno(?string $meno): void
     {
-        $this->name = $name;
+        $this->meno = $meno;
     }
 
-    public function getPassword(): ?string
+    public function getHeslo(): ?string
     {
-        return $this->password;
+        return $this->heslo;
     }
 
-    public function setPassword(?string $password): void
+    public function setHeslo(?string $heslo): void
     {
-        $this->password = $password;
+        $this->heslo = $heslo;
     }
 }

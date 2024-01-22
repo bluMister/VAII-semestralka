@@ -352,3 +352,14 @@ button:hover {
 .review-image {
     max-width: 40%;
 }
+
+#switch-form {
+    color: #4caf50; /* Blue color for the clickable text */
+    cursor: pointer;
+    transition: font-weight 0.3s ease;
+}
+
+#switch-form:hover {
+    color: #4caf50; /* Darker blue color on hover */
+    font-weight: bold;
+}

@@ -7,21 +7,21 @@ use App\Models\User;
 
 class Authenticator implements IAuthenticator
 {
+    public function __construct()
+    {
+        session_start();
+    }
 
     public function login($login, $password): bool
     {
-        try {
-            $user = User::getAll("login = ?", [$login]);
-        } catch (\Exception $e) {
-            return false;
-        }
+        $user = User::getAll("meno = ?", [$login]);
 
         if (sizeof($user) != 1) {
             return false;
         }
 
-        if (password_verify(password_hash($password, PASSWORD_DEFAULT), $user[0]->getPassword())) {
-            $_SESSION["user"] = $login;
+        if (password_verify("$password", $user[0]->getHeslo())) {
+            $_SESSION['user'] = $login;
             return true;
         }
 
@@ -30,8 +30,8 @@ class Authenticator implements IAuthenticator
 
     public function logout(): void
     {
-        if (isset($_SESSION["user"])) {
-            unset($_SESSION["user"]);
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
             session_destroy();
         }
     }
@@ -54,5 +54,13 @@ class Authenticator implements IAuthenticator
     public function getLoggedUserId(): mixed
     {
         return $_SESSION['user'];
+    }
+    public function isAdmin(): bool
+    {
+        $user = User::getAll("meno = ?", [$_SESSION['user']]);
+        if (sizeof($user) != 1) {
+            return false;
+        }
+        return $user[0]->getAdmin() == 0 ? false : true;
     }
 }
