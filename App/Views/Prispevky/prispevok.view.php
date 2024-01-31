@@ -38,6 +38,7 @@
 
     <!-- Comment Form -->
     <form id="comment-form" action="<?= $link->url("prispevky.addComment") ?>" method="post">
+        <input type="hidden" name="pid" value="<?= @$data["post"]?->getId() ?>">
         <input type="text" name="comment" placeholder="Your Comment" required>
         <button type="submit">Post Comment</button>
     </form>

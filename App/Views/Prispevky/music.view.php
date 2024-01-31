@@ -5,13 +5,12 @@ use \App\Models\Prispevky;
 /** @var App\Core\IAuthenticator $auth */
 
 ?>
-<div class="container3">
     <div class="news-cards" id="cardContainer">
         <?php foreach ($data as $prispevok): ?>
             <div class="card" data-card-id="<?php echo $prispevok->getId() ?>">
                 <img src="<?= '/' . $prispevok->getObrazok() ?>" alt="...">
                 <h2><?= $prispevok->getNazov() ?></h2>
-                <p><?= mb_substr($prispevok->getText(), 0, 20) . (mb_strlen($prispevok->getText()) > 20 ? '...' : '') ?></p>
+                <p><?= mb_substr($prispevok->getText(), 0, 100) . (mb_strlen($prispevok->getText()) > 20 ? '...' : '') ?></p>
                 <a href="?c=Prispevky&a=display&id=<?php echo $prispevok->getId() ?>" class="read-more">Read More</a>
                 <?php if ($auth->isLogged() && $auth->isAdmin()) { ?>
                     <a href="?c=Prispevky&a=delete&id=<?php echo $prispevok->getId() ?>" class="read-more" onclick="deleteCard(<?php echo $prispevok->getId() ?>)">Delete</a>
@@ -20,5 +19,4 @@ use \App\Models\Prispevky;
             </div>
         <?php endforeach; ?>
     </div>
-</div>
 

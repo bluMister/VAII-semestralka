@@ -49,7 +49,7 @@ class PrispevkyController extends AControllerBase
         }
         $text = $this->request()->getValue("text");
         $title = $this->request()->getValue("title");
-        $obrazok = $this->request()->getValue("image");
+        $obrazok = FileStorage::saveFile($this->request()->getFiles()['image']);
         $category = $this->request()->getValue("kat");
         $post->setNazov($title);
         $post->setText($text);
@@ -88,6 +88,9 @@ class PrispevkyController extends AControllerBase
             $replies = Reply::getAll("comment_id = $cid");
         }
 
+        if(empty($replies)){
+            $replies = [];
+        }
 
         return $this->html(["post" => $post, "comments" => $comments, "replies" => $replies], viewName: "prispevok");
     }
@@ -106,10 +109,12 @@ class PrispevkyController extends AControllerBase
     public function addComment() {
 
         $text = $this->request()->getValue("comment");
+        $pid = $this->request()->getValue("pid");
 
         $comment = new Comment();
         $comment->setAuthor($this->app->getAuth()->getLoggedUserName());
         $comment->setText($text);
+        $comment->setPostId($pid);
         $comment->save();
 
         //$comments = Comment::getAll("post_id = $postID");
@@ -148,5 +153,17 @@ class PrispevkyController extends AControllerBase
     public function postMaker(): Response
     {
         return $this->html();
+    }
+    private function handleNewFileName(?string $oldFileName) : ?string
+    {
+        $resultName = $oldFileName;
+        $newFileName = $this->request()->getFiles()['pictureFile']['name'];
+        if (strlen($newFileName) > 0)
+        {
+            if ($oldFileName && strlen($oldFileName) > 0)
+                FileStorage::deleteFile($oldFileName);
+            $resultName = FileStorage::saveFile($this->request()->getFiles()['pictureFile']);
+        }
+        return $resultName;
     }
 }

@@ -22,7 +22,7 @@ class FileStorage
         $filePath = FileStorage::UPLOAD_DIR . DIRECTORY_SEPARATOR . $filePrefix . "-" .$fileData['name'];
         // do the move
         if (move_uploaded_file($fileData['tmp_name'], $filePath)) {
-            return $filePrefix . "-" .$fileData['name'];
+            return $filePath;
         } else {
             throw new HTTPException(503, 'File upload failed. Did you create upload directory?');
         }

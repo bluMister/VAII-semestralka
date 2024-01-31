@@ -34,11 +34,9 @@
         <div class="mobile-menu-toggle">&#9776;</div
     </div>
 </nav>
-<div class="container-fluid mt-3">
     <div class="web-content">
         <?= $contentHTML ?>
     </div>
-</div>
 </body>
 <footer class="footer">
     <div class="container">

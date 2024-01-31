@@ -5,7 +5,6 @@ use \App\Models\Prispevky;
 /** @var App\Core\IAuthenticator $auth */
 
 ?>
-<div class="container3">
     <div class="news-cards" id="cardContainer">
         <?php foreach ($data as $prispevok): ?>
             <div class="card" data-card-id="<?php echo $prispevok->getId() ?>">
@@ -20,6 +19,5 @@ use \App\Models\Prispevky;
             </div>
         <?php endforeach; ?>
     </div>
-</div>
 
 
