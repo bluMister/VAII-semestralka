@@ -19,7 +19,7 @@
             <p><?= nl2br(htmlspecialchars($comment->getText())) ?></p>
 
             <!-- Reply Form -->
-            <form class="reply-form" data-parent-id="<?= $comment->getId() ?>">
+            <form class="reply-form" action="<?= $link->url("prispevky.addReply") ?>" method="post">
                 <input type="text" name="reply" placeholder="Your Reply" required>
                 <button type="submit">Reply</button>
             </form>
@@ -28,7 +28,7 @@
             <div class="replies-container">
                 <?php foreach ($data["replies"] as $reply): ?>
                     <div class="comment-one">
-                        <h3><?= htmlspecialchars($reply->getAuthor()) ?></h3>
+                        <h3><?= $reply->getAuthor() ?></h3>
                         <p><?= nl2br(htmlspecialchars($reply->getText())) ?></p>
                     </div>
                 <?php endforeach; ?>
@@ -37,7 +37,7 @@
     <?php endforeach; ?>
 
     <!-- Comment Form -->
-    <form id="comment-form">
+    <form id="comment-form" action="<?= $link->url("prispevky.addComment") ?>" method="post">
         <input type="text" name="comment" placeholder="Your Comment" required>
         <button type="submit">Post Comment</button>
     </form>

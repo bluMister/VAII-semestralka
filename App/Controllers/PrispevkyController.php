@@ -81,7 +81,15 @@ class PrispevkyController extends AControllerBase
         $id = $this->request()->getValue("id");
         $post = Prispevky::getOne($id);
         $comments = Comment::getAll("post_id = $id");
-        return $this->html(["post" => $post, "comments" => $comments], viewName: "prispevok");
+        /** @var Reply[] $replies */
+
+        foreach ($comments as $com){
+            $cid = $com->getId();
+            $replies = Reply::getAll("comment_id = $cid");
+        }
+
+
+        return $this->html(["post" => $post, "comments" => $comments, "replies" => $replies], viewName: "prispevok");
     }
 
     public function delete() {
@@ -95,19 +103,17 @@ class PrispevkyController extends AControllerBase
         return $this->html($posts, "movies");
     }
 
-    public function addComment() : Response {
-        $postID = $this->request()->getValue("id");
-        $formData = $this->app->getRequest()->getPost();
-        $text = $formData["comment"];
+    public function addComment() {
+
+        $text = $this->request()->getValue("comment");
 
         $comment = new Comment();
         $comment->setAuthor($this->app->getAuth()->getLoggedUserName());
         $comment->setText($text);
-        $comment->setPostId($postID);
         $comment->save();
 
-        $comments = Comment::getAll("post_id = $postID");
-        return $this->json($comments);
+        //$comments = Comment::getAll("post_id = $postID");
+        //return $this->json($comments);
     }
 
     public function addReply() {
