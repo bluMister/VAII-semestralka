@@ -40,6 +40,10 @@ class AuthController extends AControllerBase
         }
 
         $data = ($logged === false ? ['message' => 'Zlý login alebo heslo!'] : []);
+
+        if ($this->app->getAuth()->isAdmin()){
+            return $this->redirect($this->url("admin.index"));
+        }
         return $this->html($data);
     }
 

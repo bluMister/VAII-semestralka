@@ -208,6 +208,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-bottom: 10%;
 }
 
 .card {
@@ -219,9 +220,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: 0.3s;
     text-align: center;
-    border: solid;
-    border-width: 2px;
-    border-color: rgba(0,20,0,0.5);
+    border: 2px solid rgba(0, 20, 0, 0.5);
 }
 
 .card img {
@@ -338,10 +337,7 @@ button:hover {
 
 .review-container {
     display: flex;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-bottom: 50px;
-    margin-top:  50px;
+    margin: 50px 10%;
 }
 
 .review-text {

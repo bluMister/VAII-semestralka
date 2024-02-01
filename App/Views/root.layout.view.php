@@ -22,7 +22,7 @@
             <li><a href=<?= $link->url("prispevky.movies") ?>>Movies</a></li>
             <li><a href=<?= $link->url("prispevky.games") ?>>Games</a></li>
             <li><a href=<?= $link->url("prispevky.music") ?>>Music</a></li>
-            <?php if ($auth->isLogged()) { ?>
+            <?php if ($auth->isLogged() && $auth->isAdmin()) { ?>
             <li><a href=<?= $link->url("prispevky.postMaker") ?>>new</a></li>
             <?php } ?>
             <li class="right-align"><?php if ($auth->isLogged()) { ?>

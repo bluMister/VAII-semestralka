@@ -47,7 +47,7 @@ class PrispevkyController extends AControllerBase
             $post = new Prispevky();
             $data["action"] = "Pridať";
         }
-        $text = $this->request()->getValue("text");
+        $text = nl2br(htmlspecialchars($this->request()->getValue("text")));
         $title = $this->request()->getValue("title");
         $obrazok = FileStorage::saveFile($this->request()->getFiles()['image']);
         $category = $this->request()->getValue("kat");

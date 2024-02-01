@@ -10,7 +10,7 @@ use \App\Models\Prispevky;
             <div class="card" data-card-id="<?php echo $prispevok->getId() ?>">
                 <img src="<?= '/' . $prispevok->getObrazok() ?>" alt="...">
                 <h2><?= $prispevok->getNazov() ?></h2>
-                <p><?= mb_substr($prispevok->getText(), 0, 100) . (mb_strlen($prispevok->getText()) > 20 ? '...' : '') ?></p>
+                <p><?= mb_substr($prispevok->getText(), 0, 120) . (mb_strlen($prispevok->getText()) > 120 ? '...' : '') ?></p>
                 <a href="?c=Prispevky&a=display&id=<?php echo $prispevok->getId() ?>" class="read-more">Read More</a>
                 <?php if ($auth->isLogged() && $auth->isAdmin()) { ?>
                     <a href="?c=Prispevky&a=delete&id=<?php echo $prispevok->getId() ?>" class="read-more" onclick="deleteCard(<?php echo $prispevok->getId() ?>)">Delete</a>

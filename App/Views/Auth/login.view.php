@@ -40,7 +40,7 @@ $layout = 'auth';
                         <div class="form-label-group mb-3">
                             <input name="repassword" type="password" id="repassword" class="form-control" placeholder="Retype Password" required>
                         </div>
-                        <!-- Add other registration form fields as needed -->
+
                         <div class="text-center">
                             <button class="btn btn-success" type="submit" name="submit">Register</button>
                             <p id="switch-form" onclick="switchForm()">Already have an account? Log in here</p>
