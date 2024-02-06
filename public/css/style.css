@@ -349,6 +349,10 @@ button:hover {
     max-width: 40%;
 }
 
+.comments-container {
+    margin: 50px 10%;
+}
+
 #switch-form {
     color: #4caf50; /* Blue color for the clickable text */
     cursor: pointer;

@@ -57,6 +57,9 @@ class Authenticator implements IAuthenticator
     }
     public function isAdmin(): bool
     {
+        if (!$_SESSION){
+            return false;
+        }
         $user = User::getAll("meno = ?", [$_SESSION['user']]);
         if (sizeof($user) != 1) {
             return false;
