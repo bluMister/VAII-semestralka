@@ -89,8 +89,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 var commentElement = document.createElement('div');
                 commentElement.classList.add('comment-one');
                 commentElement.innerHTML = `
-                <h3>Test</h3>
-                <p>more test</p>
+                <h3>${data.author}</h3>
+                <p>${data.text}</p>
             `;
 
                 // Append the new comment to the comments container
@@ -109,6 +109,76 @@ document.addEventListener("DOMContentLoaded", function() {
         commentForm.addEventListener('submit', function(event) {
             event.preventDefault();
             submitCommentForm(commentForm);
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Function to handle form submission via AJAX
+    function handleSubmitForm(form, callback) {
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                callback(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Event listener for comment form submission
+    var commentForm = document.getElementById('comment-form');
+    if (commentForm) {
+        commentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            handleSubmitForm(commentForm, function(data) {
+                // Create a new comment element
+                var commentElement = document.createElement('div');
+                commentElement.classList.add('comment-one');
+                commentElement.innerHTML = `
+                    <h3>${data.author}</h3>
+                    <p>${data.text}</p>
+                `;
+
+                // Append the new comment to the comments container
+                var commentsContainer = document.querySelector('.comments-container');
+                commentsContainer.appendChild(commentElement);
+
+                // Clear the input field after successful submission
+                commentForm.querySelector('input[name="comment"]').value = '';
+            });
+        });
+    }
+
+    // Event listener for reply form submission
+    var replyForms = document.querySelectorAll('.reply-form');
+    if (replyForms) {
+        replyForms.forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                handleSubmitForm(form, function(data) {
+                    // Create a new reply element
+                    var replyElement = document.createElement('div');
+                    replyElement.classList.add('reply-one');
+                    replyElement.innerHTML = `
+                        <h3>${data.author}</h3>
+                        <p>${data.text}</p>
+                    `;
+
+                    // Find the corresponding comment container
+                    var commentContainer = form.closest('.comment-one');
+
+                    // Append the new reply to the replies container of the comment
+                    var repliesContainer = commentContainer.querySelector('.replies-container');
+                    repliesContainer.appendChild(replyElement);
+
+                    // Clear the input field after successful submission
+                    form.querySelector('input[name="reply"]').value = '';
+                });
+            });
         });
     }
 });

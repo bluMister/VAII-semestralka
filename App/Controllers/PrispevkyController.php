@@ -35,7 +35,7 @@ class PrispevkyController extends AControllerBase
     /**
      * @throws \Exception
      */
-    public function add() {
+    public function add(): Response {
         $id = $this->request()->getValue("id");
         $data = [];
         if ($id) {
@@ -72,7 +72,7 @@ class PrispevkyController extends AControllerBase
     }
 
 
-    public function edit() {
+    public function edit(): Response{
         $id = $this->request()->getValue("id");
         $postToEdit = Prispevky::getOne($id);
         return $this->html($postToEdit, viewName: "postMaker");
@@ -103,7 +103,7 @@ class PrispevkyController extends AControllerBase
         return $this->html(["post" => $post, "comments" => $comments, "replies" => $replies], viewName: "prispevok");
     }
 
-    public function delete() {
+    public function delete(): Response {
         $id = $this->request()->getValue("id");
         $postToDelete = Prispevky::getOne($id);
         $cat = $postToDelete->getKategoria();
@@ -111,6 +111,15 @@ class PrispevkyController extends AControllerBase
             $postToDelete->delete();
         }
         $posts = Prispevky::getAll("kategoria = $cat");
+        if ($cat = 1)
+            return $this->html($posts, "movies");
+
+        if ($cat = 2)
+            return $this->html($posts, "games");
+
+        if ($cat = 3)
+            return $this->html($posts, "music");
+
         return $this->html($posts, "movies");
     }
 
@@ -132,7 +141,7 @@ class PrispevkyController extends AControllerBase
         ));
     }
 
-    public function addReply()
+    public function addReply(): Response
     {
         $comID = $this->request()->getValue("cid");
         $text = $this->request()->getValue("reply");
@@ -142,6 +151,11 @@ class PrispevkyController extends AControllerBase
         $reply->setText($text);
         $reply->setCommentId($comID);
         $reply->save();
+
+        return $this->json(array(
+            'author' => $reply->getAuthor(),
+            'text' => $reply->getText()
+        ));
     }
 
     public function movies(): Response

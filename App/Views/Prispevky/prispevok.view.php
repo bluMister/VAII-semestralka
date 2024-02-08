@@ -20,20 +20,22 @@
             <p><?= nl2br(htmlspecialchars($comment->getText())) ?></p>
 
             <!-- Display Replies -->
-            <div class="replies-container">
+            <div class="replies-container" data-comment-id="<?= $comment->getId() ?>">
                 <?php foreach ($data["replies"] as $reply): ?>
                     <?php if ($reply->getCommentId() == $comment->getId()) { ?>
-                    <div class="comment-one">
+                    <div class="reply-one">
                         <h3><?= $reply->getAuthor() ?></h3>
                         <p><?= nl2br(htmlspecialchars($reply->getText())) ?></p>
                     </div>
                 <?php } endforeach; ?>
             </div>
+        </div>
+        <div class="replyForm">
             <!-- Reply Form -->
             <?php if ($auth->isLogged()) { ?>
             <form id="reply-form" action="<?= $link->url("prispevky.addReply") ?>" method="post">
-                <input type="hidden" name="cid" value="<?= $comment->getId() ?>">
-                <input type="text" name="reply" placeholder="Your Reply" required>
+                <input id="replyID" type="hidden" name="cid" value="<?= $comment->getId() ?>">
+                <input id="replyT" type="text" name="reply" placeholder="Your Reply" required>
                 <button type="submit">Reply</button>
             </form>
             <?php } else {?>
@@ -42,12 +44,13 @@
 
         </div>
     <?php endforeach; ?>
-
+</div>
+<div class="commentForm">
     <!-- Comment Form -->
     <?php if ($auth->isLogged()) { ?>
     <form id="comment-form" action="<?= $link->url("prispevky.addComment") ?>" method="post">
-        <input type="hidden" name="pid" value="<?= @$data["post"]?->getId() ?>">
-        <input type="text" name="comment" placeholder="Your Comment" required>
+        <input id="comID" type="hidden" name="pid" value="<?= @$data["post"]?->getId() ?>">
+        <input id="comT" type="text" name="comment" placeholder="Your Comment" required>
         <button type="submit">Post Comment</button>
     </form>
     <?php } else {?>

@@ -352,6 +352,10 @@ button:hover {
 .comments-container {
     margin: 50px 10%;
 }
+
+.commentForm {
+    margin: 50px 10%;
+}
 .replies-container {
     padding: 5px 5%;
 }
