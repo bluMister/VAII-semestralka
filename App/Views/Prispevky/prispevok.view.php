@@ -19,24 +19,27 @@
             <h3><?= htmlspecialchars($comment->getAuthor()) ?></h3>
             <p><?= nl2br(htmlspecialchars($comment->getText())) ?></p>
 
+            <!-- Display Replies -->
+            <div class="replies-container">
+                <?php foreach ($data["replies"] as $reply): ?>
+                    <?php if ($reply->getCommentId() == $comment->getId()) { ?>
+                    <div class="comment-one">
+                        <h3><?= $reply->getAuthor() ?></h3>
+                        <p><?= nl2br(htmlspecialchars($reply->getText())) ?></p>
+                    </div>
+                <?php } endforeach; ?>
+            </div>
             <!-- Reply Form -->
             <?php if ($auth->isLogged()) { ?>
-            <form class="reply-form" action="<?= $link->url("prispevky.addReply") ?>" method="post">
+            <form id="reply-form" action="<?= $link->url("prispevky.addReply") ?>" method="post">
+                <input type="hidden" name="cid" value="<?= $comment->getId() ?>">
                 <input type="text" name="reply" placeholder="Your Reply" required>
                 <button type="submit">Reply</button>
             </form>
             <?php } else {?>
             <p>For replying to comments, you must <a href="?c=auth&a=login" class="active">log in</a> first!</p>
             <?php } ?>
-            <!-- Display Replies -->
-            <div class="replies-container">
-                <?php foreach ($data["replies"] as $reply): ?>
-                    <div class="comment-one">
-                        <h3><?= $reply->getAuthor() ?></h3>
-                        <p><?= nl2br(htmlspecialchars($reply->getText())) ?></p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+
         </div>
     <?php endforeach; ?>
 

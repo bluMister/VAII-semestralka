@@ -72,7 +72,7 @@ class App
                 if ($response instanceof Response) {
                     $response->send();
                 } else {
-                    throw new \Exception("Action {$this->router->getFullControllerName()}::{$this->router->getAction()} didn't return an instance of Response.");
+                    //throw new \Exception("Action {$this->router->getFullControllerName()}::{$this->router->getAction()} didn't return an instance of Response.");
                 }
             } else {
                 if ($this->auth->isLogged() || !defined('\\App\\Config\\Configuration::LOGIN_URL')) {

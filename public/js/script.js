@@ -67,57 +67,48 @@ function switchForm() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    const commentForm = document.getElementById('comment-form');
+document.addEventListener("DOMContentLoaded", function() {
+    function submitCommentForm(form) {
+        var formData = new FormData(form);
 
-
-    commentForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        // Serialize form data
-        const formData = new FormData(commentForm);
-        const parentId = event.target.getAttribute('data-parent-id');
-
-        // Use AJAX to submit the form data
-        fetch('http://localhost?c=Prispevky&a=addComment&id=' + parentId, {
-            method: 'POST',
+        fetch(form.action, {
+            method: form.method,
+            headers: {
+                'Content-Type' : "application/json",
+            },
             body: formData
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                //return response.json(); // Parse JSON response
+            })
             .then(data => {
-                // Assuming the server responds with the new comment data
-                // Update the comments container with the new comment
-                const commentsContainer = document.querySelector('.comments-container');
-                commentsContainer.innerHTML = data.commentsHtml;
-            })
-            .catch(error => {
-                console.error('Error submitting comment:', error);
-            });
-    });
+                // Create a new comment element using the received JSON data
+                var commentElement = document.createElement('div');
+                commentElement.classList.add('comment-one');
+                commentElement.innerHTML = `
+                <h3>Test</h3>
+                <p>more test</p>
+            `;
 
-    // Event delegation for reply forms
-    document.addEventListener('submit', function (event) {
-        if (event.target && event.target.matches('.reply-form')) {
+                // Append the new comment to the comments container
+                var commentsContainer = document.querySelector('.comments-container');
+                commentsContainer.appendChild(commentElement);
+
+                // Clear the input field after successful submission
+                form.querySelector('input[name="comment"]').value = '';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Event listener for comment form submission
+    var commentForm = document.querySelector('.comment-form');
+    if (commentForm) {
+        commentForm.addEventListener('submit', function(event) {
             event.preventDefault();
-
-            const formData = new FormData(event.target);
-            const parentId = event.target.getAttribute('data-parent-id');
-
-            // Use AJAX to submit the reply form data
-            fetch('http://localhost?c=Prispevky&a=addReply&id=' + parentId, {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Assuming the server responds with the new reply data
-                    // Update the replies container with the new reply
-                    const repliesContainer = event.target.nextElementSibling;
-                    repliesContainer.innerHTML = data.repliesHtml;
-                })
-                .catch(error => {
-                    console.error('Error submitting reply:', error);
-                });
-        }
-    });
+            submitCommentForm(commentForm);
+        });
+    }
 });

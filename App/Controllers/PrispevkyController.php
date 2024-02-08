@@ -6,6 +6,7 @@ use App\Core\AControllerBase;
 use App\Core\DB\Connection;
 use App\Core\HTTPException;
 use App\Core\Model;
+use App\Core\Responses\JsonResponse;
 use App\Core\Responses\RedirectResponse;
 use App\Core\Responses\Response;
 use App\Helpers\FileStorage;
@@ -77,7 +78,8 @@ class PrispevkyController extends AControllerBase
         return $this->html($postToEdit, viewName: "postMaker");
     }
 
-    public function display() {
+    public function display(): Response
+    {
         $id = $this->request()->getValue("id");
         $post = Prispevky::getOne($id);
         $comments = Comment::getAll("post_id = $id");
@@ -85,7 +87,13 @@ class PrispevkyController extends AControllerBase
 
         foreach ($comments as $com){
             $cid = $com->getId();
-            $replies = Reply::getAll("comment_id = $cid");
+            $repliesOne = Reply::getAll("comment_id = $cid");
+            if(!empty($repliesOne) && !empty($replies)){
+                $replies = array_merge($replies, $repliesOne);
+            }
+            if(empty($replies) && !empty($repliesOne)){
+                $replies = $repliesOne;
+            }
         }
 
         if(empty($replies)){
@@ -106,8 +114,8 @@ class PrispevkyController extends AControllerBase
         return $this->html($posts, "movies");
     }
 
-    public function addComment() {
-
+    public function addComment(): Response
+    {
         $text = $this->request()->getValue("comment");
         $pid = $this->request()->getValue("pid");
 
@@ -117,21 +125,23 @@ class PrispevkyController extends AControllerBase
         $comment->setPostId($pid);
         $comment->save();
 
-        //$comments = Comment::getAll("post_id = $postID");
-        //return $this->json($comments);
+        //header('Content-Type: application/json');
+        return $this->json(array(
+            'author' => $comment->getAuthor(),
+            'text' => $comment->getText()
+        ));
     }
 
-    public function addReply() {
-        $comID = $this->request()->getValue("id");
-        $formData = $this->app->getRequest()->getPost();
-        $text = $formData["comment"];
+    public function addReply()
+    {
+        $comID = $this->request()->getValue("cid");
+        $text = $this->request()->getValue("reply");
 
         $reply = new Reply();
         $reply->setAuthor($this->app->getAuth()->getLoggedUserName());
         $reply->setText($text);
         $reply->setCommentId($comID);
         $reply->save();
-
     }
 
     public function movies(): Response

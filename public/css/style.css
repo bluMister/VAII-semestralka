@@ -328,7 +328,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 button:hover {
@@ -351,6 +351,17 @@ button:hover {
 
 .comments-container {
     margin: 50px 10%;
+}
+.replies-container {
+    padding: 5px 5%;
+}
+
+#comment-form{
+    margin: 10px 5px;
+}
+
+#reply-form{
+    margin: 5px 5%;
 }
 
 #switch-form {
