@@ -41,7 +41,7 @@ class PrispevkyController extends AControllerBase
         if ($id) {
             $post = Prispevky::getOne($id);
             if (!$post) {
-                return $this->redirect("?c=Homes");
+                return $this->redirect("?c=home");
             }
             $data["action"] = "Upraviť";
         } else {

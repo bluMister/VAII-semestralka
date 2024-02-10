@@ -26,6 +26,7 @@ class AdminController extends AControllerBase
     /**
      * Example of an action (authorization needed)
      * @return \App\Core\Responses\Response|\App\Core\Responses\ViewResponse
+     * @throws \Exception
      */
     public function index(): Response
     {
@@ -33,16 +34,25 @@ class AdminController extends AControllerBase
         return $this->html($data);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function update(): Response {
 
-        foreach ($this->request()->getValue("admin[]") as $uid) {
-            $user = User::getOne($uid);
-            $user->setAdmin(true);
-        }
+        $users = User::getAll();
 
-        foreach ($this->request()->getValue("delete[]") as $uid) {
-            $user = User::getOne($uid);
-            $user->delete();
+        foreach ($users as $user){
+            $cid = $user->getId();
+            $val = $this->request()->getValue("$cid");
+            if($val == 1){
+                $user->setAdmin(1);
+                $user->save();
+            } elseif($val == 2){
+                $user->delete();
+            }else{
+                $user->setAdmin(0);
+                $user->save();
+            }
         }
 
         $data = User::getAll();

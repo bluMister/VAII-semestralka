@@ -30,7 +30,7 @@
                 <?php } else { ?>
                     <a href="?c=auth&a=login" class="right-align">Login</a>
                 <?php } ?>
-        </di>
+        </div>
         <div class="mobile-menu-toggle">&#9776;</div
     </div>
 </nav>

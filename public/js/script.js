@@ -151,13 +151,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function submitUserUpdateForm() {
-    //event.preventDefault();
+function submitUserUpdateForm(event) {
+    event.preventDefault();
     var form = document.getElementById('userUpForm');
     var formData = new FormData(form);
+    console.log(formData);
 
     // Send the form data to the PHP backend using AJAX
-    fetch(form.action, {
+    fetch("http://localhost/?c=admin&a=update", {
         method: 'POST',
         body: formData
     })
@@ -184,11 +185,11 @@ function updateTable(users) {
     table.innerHTML = ''; // Clear the existing table
 
     // Rebuild the table with the updated user data
-    var tableHTML = '<tr><th>Username</th><th>Is Admin</th><th>Delete User</th></tr>';
+    var tableHTML = '<tr><th>Username</th><th>Is Admin</th><th>delete user</th></tr>';
     users.forEach(user => {
         tableHTML += '<tr>';
-        tableHTML += '<td>' + user.username + '</td>';
-        tableHTML += '<td><input type="checkbox" name="admin[]" value="' + user.id + '" ' + (user.isAdmin ? 'checked' : '') + '></td>';
+        tableHTML += '<td>' + user.meno + '</td>';
+        tableHTML += '<td><input type="checkbox" name="admin[]" value="' + user.id + '" ' + (user.admin ? 'checked' : '') + '></td>';
         tableHTML += '<td><input type="checkbox" name="delete[]" value="' + user.id + '"></td>';
         tableHTML += '</tr>';
     });

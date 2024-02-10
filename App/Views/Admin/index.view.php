@@ -20,7 +20,7 @@ $layout = 'auth';
 
 <h1>User Management</h1>
 <form id="userUpForm" action="<?php $link->url("admin.update") ?>" method="post">
-    <table>
+    <table id="userTable">
         <tr>
             <th>Username</th>
             <th>Is Admin</th>
@@ -29,10 +29,10 @@ $layout = 'auth';
         <?php foreach ($data as $user): ?>
             <tr>
                 <td><?php echo $user->getMeno(); ?></td>
-                <td><input type="checkbox" name="admin[]" value="<?php echo $user->getId(); ?>" <?php echo $user->getAdmin() ? 'checked' : ''; ?>></td>
-                <td><input type="checkbox" name="delete[]" value="<?php echo $user->getId(); ?>"></td>
+                <td><input type="checkbox" name="<?php echo $user->getId(); ?>" value="1" <?php echo $user->getAdmin() ? 'checked' : ''; ?>></td>
+                <td><input type="checkbox" name="<?php echo $user->getId(); ?>" value="2"></td>
             </tr>
         <?php endforeach; ?>
     </table>
-    <input type="submit" onclick="submitUserUpdateForm()" value="Submit">
+    <button type="submit" onclick="submitUserUpdateForm(event)">submit changes</button>
 </form>

@@ -389,3 +389,9 @@ button:hover {
     color: #4caf50; /* Darker blue color on hover */
     font-weight: bold;
 }
+#userTable {
+    width: 100%;
+}
+#userTable tr td{
+    padding-left: 10%;
+}
