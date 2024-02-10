@@ -106,6 +106,7 @@ class PrispevkyController extends AControllerBase
     public function delete(): Response {
         $id = $this->request()->getValue("id");
         $postToDelete = Prispevky::getOne($id);
+        unlink($postToDelete->getObrazok());
         $cat = $postToDelete->getKategoria();
         if ($postToDelete) {
             $postToDelete->delete();

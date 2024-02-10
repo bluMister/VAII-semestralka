@@ -15,22 +15,22 @@
 </head>
 <body>
 <nav class="navbar">
-    <div class="container">
+    <div class="nav-container">
         <div class="logo">Logo</div>
-        <ul class="nav-links">
-            <li><a href=<?= $link->url("home.index") ?>>Home</a></li>
-            <li><a href=<?= $link->url("prispevky.movies") ?>>Movies</a></li>
-            <li><a href=<?= $link->url("prispevky.games") ?>>Games</a></li>
-            <li><a href=<?= $link->url("prispevky.music") ?>>Music</a></li>
+        <div class="nav-links">
+            <a href=<?= $link->url("home.index") ?>>Home</a>
+            <a href=<?= $link->url("prispevky.movies") ?>>Movies</a>
+            <a href=<?= $link->url("prispevky.games") ?>>Games</a>
+            <a href=<?= $link->url("prispevky.music") ?>>Music</a>
             <?php if ($auth->isLogged() && $auth->isAdmin()) { ?>
-            <li><a href=<?= $link->url("prispevky.postMaker") ?>>new</a></li>
+            <a href=<?= $link->url("prispevky.postMaker") ?>>new</a>
             <?php } ?>
-            <li class="right-align"><?php if ($auth->isLogged()) { ?>
-                    <a href="?c=auth&a=logout" class="active">Logout</a>
+            <?php if ($auth->isLogged()) { ?>
+                    <a href="?c=auth&a=logout" class="right-align">Logout</a>
                 <?php } else { ?>
-                    <a href="?c=auth&a=login" class="active">Login</a>
-                <?php } ?></li>
-        </ul>
+                    <a href="?c=auth&a=login" class="right-align">Login</a>
+                <?php } ?>
+        </div>
         <div class="mobile-menu-toggle">&#9776;</div
     </div>
 </nav>

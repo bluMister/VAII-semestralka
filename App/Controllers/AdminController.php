@@ -32,4 +32,21 @@ class AdminController extends AControllerBase
         $data = User::getAll();
         return $this->html($data);
     }
+
+    public function update(): Response {
+
+        foreach ($this->request()->getValue("admin[]") as $uid) {
+            $user = User::getOne($uid);
+            $user->setAdmin(true);
+        }
+
+        foreach ($this->request()->getValue("delete[]") as $uid) {
+            $user = User::getOne($uid);
+            $user->delete();
+        }
+
+        $data = User::getAll();
+
+        return $this->json($data);
+    }
 }

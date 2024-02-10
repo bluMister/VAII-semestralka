@@ -2,47 +2,58 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    display: grid;
 }
 
 .navbar {
     background-color: #4CAF50;
     color: white;
     padding: 15px 0;
-}
 
-.container {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     display: flex;
 
     align-items: center;
+
+}
+
+.nav-container{
+    display: inline-flex;
     border-bottom-style: solid;
-    border-width: 5px;
+    border-bottom-width: 5px;
+    border-bottom-color: white;
+    width: 100%;
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
+    margin: 0 20px 10px 20px;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
     gap: 20px;
+    padding-top: 7px;
+    font-weight: bold;
+    width: 100%;
 }
 
-.nav-links li a {
+.nav-links a {
     text-decoration: none;
     color: white;
     transition: 0.3s;
 }
 
-.nav-links li a:hover{
+.nav-links a:hover{
     color: darkolivegreen;
 }
 
-.nav-links li.right-align {
-    margin-left: 200%;
+.nav-links a.right-align {
+    margin-left: auto;
+    margin-right: 20px;
 }
 
 .mobile-menu-toggle {
@@ -67,15 +78,15 @@ body {
         z-index: 99;
     }
 
-    .nav-links li {
-        margin: 0;
+    .nav-links a {
+        margin: 5px;
     }
 
     .mobile-menu-toggle {
         display: block;
     }
-    .nav-links li.right-align {
-        margin-left: 0;
+    .nav-links a.right-align {
+        margin-left: 5px;
     }
 }
 
@@ -139,8 +150,8 @@ body {
     text-align: center;
     clear: both;
     position: relative;
-    bottom: 0;
     width: 100%;
+    margin-top: 10%;
 }
 
 .contact-info {
@@ -364,7 +375,7 @@ button:hover {
     margin: 10px 5px;
 }
 
-#reply-form{
+.reply-form{
     margin: 5px 5%;
 }
 

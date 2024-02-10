@@ -29,11 +29,11 @@
                     </div>
                 <?php } endforeach; ?>
             </div>
-        </div>
+
         <div class="replyForm">
             <!-- Reply Form -->
             <?php if ($auth->isLogged()) { ?>
-            <form id="reply-form" action="<?= $link->url("prispevky.addReply") ?>" method="post">
+            <form class="reply-form" action="<?= $link->url("prispevky.addReply") ?>" method="post">
                 <input id="replyID" type="hidden" name="cid" value="<?= $comment->getId() ?>">
                 <input id="replyT" type="text" name="reply" placeholder="Your Reply" required>
                 <button type="submit">Reply</button>
@@ -41,7 +41,7 @@
             <?php } else {?>
             <p>For replying to comments, you must <a href="?c=auth&a=login" class="active">log in</a> first!</p>
             <?php } ?>
-
+        </div>
         </div>
     <?php endforeach; ?>
 </div>

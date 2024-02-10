@@ -67,25 +67,19 @@ function switchForm() {
     }
 }
 
+
 document.addEventListener("DOMContentLoaded", function() {
+    // Function to handle form submission via AJAX
     function submitCommentForm(form) {
         var formData = new FormData(form);
 
         fetch(form.action, {
             method: form.method,
-            headers: {
-                'Content-Type' : "application/json",
-            },
             body: formData
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                //return response.json(); // Parse JSON response
-            })
+            .then(response => response.json())
             .then(data => {
-                // Create a new comment element using the received JSON data
+                // Create a new comment element
                 var commentElement = document.createElement('div');
                 commentElement.classList.add('comment-one');
                 commentElement.innerHTML = `
@@ -104,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Event listener for comment form submission
-    var commentForm = document.querySelector('.comment-form');
+    var commentForm = document.getElementById('comment-form');
     if (commentForm) {
         commentForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -115,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     // Function to handle form submission via AJAX
-    function handleSubmitForm(form, callback) {
+    function submitReplyForm(form) {
         var formData = new FormData(form);
 
         fetch(form.action, {
@@ -124,61 +118,79 @@ document.addEventListener("DOMContentLoaded", function() {
         })
             .then(response => response.json())
             .then(data => {
-                callback(data);
+                // Create a new comment element
+                var replyElement = document.createElement('div');
+                replyElement.classList.add('reply-one');
+                replyElement.innerHTML = `
+                <h3>${data.author}</h3>
+                <p>${data.text}</p>
+            `;
+
+                // Find the corresponding comment container
+                var commentContainer = form.closest('.comment-one');
+
+                // Append the new comment to the comments container
+                var repliesContainer = commentContainer.querySelector('.replies-container');
+                repliesContainer.appendChild(replyElement);
+
+                // Clear the input field after successful submission
+                form.querySelector('input[name="reply"]').value = '';
             })
             .catch(error => console.error('Error:', error));
     }
 
-    // Event listener for comment form submission
-    var commentForm = document.getElementById('comment-form');
-    if (commentForm) {
-        commentForm.addEventListener('submit', function(event) {
+    // Event listener for replies form submission
+    var replyForms = document.getElementsByClassName('reply-form');
+    Array.from(replyForms).forEach(replyFun);
+
+    function replyFun(replyForm) {
+        replyForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            handleSubmitForm(commentForm, function(data) {
-                // Create a new comment element
-                var commentElement = document.createElement('div');
-                commentElement.classList.add('comment-one');
-                commentElement.innerHTML = `
-                    <h3>${data.author}</h3>
-                    <p>${data.text}</p>
-                `;
-
-                // Append the new comment to the comments container
-                var commentsContainer = document.querySelector('.comments-container');
-                commentsContainer.appendChild(commentElement);
-
-                // Clear the input field after successful submission
-                commentForm.querySelector('input[name="comment"]').value = '';
-            });
-        });
-    }
-
-    // Event listener for reply form submission
-    var replyForms = document.querySelectorAll('.reply-form');
-    if (replyForms) {
-        replyForms.forEach(function(form) {
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                handleSubmitForm(form, function(data) {
-                    // Create a new reply element
-                    var replyElement = document.createElement('div');
-                    replyElement.classList.add('reply-one');
-                    replyElement.innerHTML = `
-                        <h3>${data.author}</h3>
-                        <p>${data.text}</p>
-                    `;
-
-                    // Find the corresponding comment container
-                    var commentContainer = form.closest('.comment-one');
-
-                    // Append the new reply to the replies container of the comment
-                    var repliesContainer = commentContainer.querySelector('.replies-container');
-                    repliesContainer.appendChild(replyElement);
-
-                    // Clear the input field after successful submission
-                    form.querySelector('input[name="reply"]').value = '';
-                });
-            });
+            submitReplyForm(replyForm);
         });
     }
 });
+
+function submitUserUpdateForm() {
+    //event.preventDefault();
+    var form = document.getElementById('userUpForm');
+    var formData = new FormData(form);
+
+    // Send the form data to the PHP backend using AJAX
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Parse the JSON response
+            } else {
+                throw new Error('Something went wrong');
+            }
+        })
+        .then(updatedUsers => {
+            // Update the displayed table with the updated user data
+            updateTable(updatedUsers);
+            alert('Changes have been saved successfully.');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+}
+
+function updateTable(users) {
+    var table = document.getElementById('userTable');
+    table.innerHTML = ''; // Clear the existing table
+
+    // Rebuild the table with the updated user data
+    var tableHTML = '<tr><th>Username</th><th>Is Admin</th><th>Delete User</th></tr>';
+    users.forEach(user => {
+        tableHTML += '<tr>';
+        tableHTML += '<td>' + user.username + '</td>';
+        tableHTML += '<td><input type="checkbox" name="admin[]" value="' + user.id + '" ' + (user.isAdmin ? 'checked' : '') + '></td>';
+        tableHTML += '<td><input type="checkbox" name="delete[]" value="' + user.id + '"></td>';
+        tableHTML += '</tr>';
+    });
+    table.innerHTML = tableHTML;
+}
