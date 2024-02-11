@@ -54,7 +54,7 @@
         <button type="submit">Post Comment</button>
     </form>
     <?php } else {?>
-        <p>For commenting a review, you must <a href="?c=auth&a=login" class="active">log in</a> first!</p>
+        <p class="comment-login">For commenting a review, you must <a href="?c=auth&a=login" class="active">log in</a> first!</p>
     <?php } ?>
 </div>
 

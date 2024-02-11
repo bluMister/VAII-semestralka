@@ -54,18 +54,25 @@ class AuthController extends AControllerBase
 
 
         if (isset($formData['submit'])) {
-            $meno = $formData["login"];
+            $username = $this->request()->getValue("login");
+            $users = User::getAll();
+            foreach ($users as $user) {
+                if ($user->getMeno() == $username) {
+                    $data["message"] = "meno je už obsadene!";
+                    return $this->html($data, "login");
+                }
+            }
             $heslo = $formData["password"];
             $rheslo = $formData["repassword"];
             if($heslo == $rheslo){
                 $user = new User();
-                $user->setMeno($meno);
+                $user->setMeno($username);
                 $user->setHeslo(password_hash("$heslo", PASSWORD_DEFAULT));
                 $user->setAdmin(0);
                 $user->save();
             }else{
-                $data["errors"] = "passwords must match!";
-                return $this->html($data);
+                $data["message"] = "passwords must match!";
+                return $this->html($data, "login");
             }
         }
         return $this->redirect($this->url("auth.login"));

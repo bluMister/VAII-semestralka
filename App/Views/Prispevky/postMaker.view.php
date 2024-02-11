@@ -26,7 +26,7 @@
     </div>
 
         <label for="file-input"> Upload Image</label>
-        <input type="file" id="text" name="image" value="<?= @$data?->getObrazok() ?>">
+        <input type="file" id="text" name="image">
 
 
     <button type="submit">Submit</button>

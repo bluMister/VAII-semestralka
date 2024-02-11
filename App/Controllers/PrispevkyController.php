@@ -38,19 +38,32 @@ class PrispevkyController extends AControllerBase
     public function add(): Response {
         $id = $this->request()->getValue("id");
         $data = [];
+        $obrazok = null;
         if ($id) {
             $post = Prispevky::getOne($id);
             if (!$post) {
-                return $this->redirect("?c=home");
+                $data["errors"]["id"] = "príspevok nenájdený";
+            } else {
+                $data["action"] = "Upraviť";
+                $file = $this->request()->getFiles()['image'];
+                if(empty($file['name'])){
+                    $obrazok = $post->getObrazok();
+                } else {
+                    unlink($post->getObrazok());
+                    $obrazok = FileStorage::saveFile($this->request()->getFiles()['image']);
+                }
             }
-            $data["action"] = "Upraviť";
         } else {
             $post = new Prispevky();
             $data["action"] = "Pridať";
+            if($this->request()->getFiles()['image']){
+                $obrazok = FileStorage::saveFile($this->request()->getFiles()['image']);
+            }else{
+                $obrazok = "public/images/vaiicko_logo.png";
+            }
         }
         $text = nl2br(htmlspecialchars($this->request()->getValue("text")));
         $title = $this->request()->getValue("title");
-        $obrazok = FileStorage::saveFile($this->request()->getFiles()['image']);
         $category = $this->request()->getValue("kat");
         $post->setNazov($title);
         $post->setText($text);
@@ -109,6 +122,15 @@ class PrispevkyController extends AControllerBase
         unlink($postToDelete->getObrazok());
         $cat = $postToDelete->getKategoria();
         if ($postToDelete) {
+            $pcomms = Comment::getAll("post_id = $id");
+            foreach ($pcomms as $pcomm){
+                $pid = $pcomm->getId();
+                $creplies = Reply::getAll("comment_id = $pid");
+                foreach ($creplies as $creply){
+                    $creply->delete();
+                }
+                $pcomm->delete();
+            }
             $postToDelete->delete();
         }
         $posts = Prispevky::getAll("kategoria = $cat");
@@ -178,17 +200,5 @@ class PrispevkyController extends AControllerBase
     public function postMaker(): Response
     {
         return $this->html();
-    }
-    private function handleNewFileName(?string $oldFileName) : ?string
-    {
-        $resultName = $oldFileName;
-        $newFileName = $this->request()->getFiles()['pictureFile']['name'];
-        if (strlen($newFileName) > 0)
-        {
-            if ($oldFileName && strlen($oldFileName) > 0)
-                FileStorage::deleteFile($oldFileName);
-            $resultName = FileStorage::saveFile($this->request()->getFiles()['pictureFile']);
-        }
-        return $resultName;
     }
 }

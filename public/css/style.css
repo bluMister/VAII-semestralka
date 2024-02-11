@@ -379,6 +379,36 @@ button:hover {
     margin: 5px 5%;
 }
 
+.reply-one{
+    border-bottom: solid;
+    border-bottom-width: 3px;
+    border-color: darkolivegreen;
+
+    box-shadow: 0 0 10px rgba(0, 10, 0, 0.2);
+}
+
+.reply-one h3,p{
+    margin: 5%;
+}
+
+.comment-one{
+    border-bottom: solid;
+    border-color: darkolivegreen;
+    border-bottom-width: 5px;
+    width: fit-content;
+    box-shadow: 0 0 10px rgba(0, 10, 0, 0.2);
+}
+
+.comment-one h3,p{
+    margin: 5%;
+}
+
+.card-body{
+    display: grid;
+    justify-items: center;
+    align-content: center;
+}
+
 #switch-form {
     color: #4caf50; /* Blue color for the clickable text */
     cursor: pointer;

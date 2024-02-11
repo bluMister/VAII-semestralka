@@ -20,7 +20,7 @@ class AdminController extends AControllerBase
      */
     public function authorize($action)
     {
-        return $this->app->getAuth()->isLogged();
+        return $this->app->getAuth()->isAdmin();
     }
 
     /**
